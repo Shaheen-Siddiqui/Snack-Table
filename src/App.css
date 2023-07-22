@@ -34,15 +34,14 @@
 
 .snacks-case {
   margin: 3% 6%;
-  background-color: #757a80;
   padding: 2rem 2rem 10rem 2rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0.3) 100%);
 }
+
 
 th:hover {
   color: #333;
-  /* Set the text color to a dark color (e.g., black, #333, etc.) */
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   font-size: 1.4;
 }
@@ -50,6 +49,17 @@ th:hover {
 tr {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
+
+.pagination-btn-case {
+  /* border: solid; */
+  display: flex;
+  width: 20%;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 auto;
+  cursor: not;
+}
+
 
 @keyframes App-logo-spin {
   from {
