@@ -8,64 +8,82 @@ export const SnackContextProvider = ({ children }) => {
   const [search, setSearch] = useState("");
   const [desending, setDesending] = useState(false);
 
+  const [startIndex, setStartIndex] = useState(0);
+  const [endIndex, setEndIndex] = useState(3);
+
+  const paginationSlice =
+    startIndex >= 0 ? snackData.slice(startIndex, endIndex) : snackData;
+  const [sortedSnacks, setSortedSnacks] = useState(paginationSlice);
+
+  const paginationNexPage = () => {
+    setStartIndex((startIndex) => startIndex + 3);
+    setEndIndex((endIndex) => endIndex + 3);
+    setDesending(false);
+  };
+
+  const paginationPreviousPage = () => {
+    setStartIndex((startIndex) => startIndex - 3);
+    setEndIndex((endIndex) => endIndex - 3);
+  };
+
   const filterSearch =
-    search.length != 0
-      ? snackData.filter(
+    search.length !== 0
+      ? sortedSnacks.filter(
           (item) =>
             item.product_name.toLowerCase().includes(search.toLowerCase()) ||
             item.ingredients.some((value) =>
               value.toLowerCase().includes(search.toLowerCase())
             )
         )
-      : snackData;
+      : sortedSnacks;
 
   const sortSnacksById = () => {
     setDesending((desending) => !desending);
-    setSnackData((snackData) =>
+    setSortedSnacks((sortedSnacks) =>
       desending
-        ? [...snackData].sort((a, b) => a.id - b.id)
-        : [...snackData].sort((a, b) => b.id - a.id)
+        ? [...sortedSnacks].sort((a, b) => a.id - b.id)
+        : [...sortedSnacks].sort((a, b) => b.id - a.id)
     );
   };
 
   const sortSnacksByPrice = () => {
     setDesending((desending) => !desending);
-    setSnackData((snackData) =>
+    setSortedSnacks((sortedSnacks) =>
       desending
-        ? [...snackData].sort((a, b) => a.price - b.price)
-        : [...snackData].sort((a, b) => b.price - a.price)
+        ? [...sortedSnacks].sort((a, b) => a.price - b.price)
+        : [...sortedSnacks].sort((a, b) => b.price - a.price)
     );
   };
 
   const sortSnackByCalories = () => {
     setDesending((desending) => !desending);
-    setSnackData((snackData) =>
+    setSortedSnacks((sortedSnacks) =>
       desending
-        ? [...snackData].sort((a, b) => a.calories - b.calories)
-        : [...snackData].sort((a, b) => b.calories - a.calories)
+        ? [...sortedSnacks].sort((a, b) => a.calories - b.calories)
+        : [...sortedSnacks].sort((a, b) => b.calories - a.calories)
     );
   };
 
   const sortSnackByProductWeight = () => {
     setDesending((desending) => !desending);
-    setSnackData((snackData) =>
+    setSortedSnacks((sortedSnacks) =>
       desending
-        ? [...snackData].sort(
+        ? [...sortedSnacks].sort(
             (a, b) => parseInt(a.product_weight) - parseInt(b.product_weight)
           )
-        : [...snackData].sort(
+        : [...sortedSnacks].sort(
             (a, b) => parseInt(b.product_weight) - parseInt(a.product_weight)
           )
     );
   };
   const sortSnacksByProductName = () => {
     setDesending((desending) => !desending);
-    setSnackData((snackData) =>
+    setSortedSnacks(
       desending
-        ? [...snackData].sort((a, b) =>
+        ? [...sortedSnacks].sort((a, b) =>
             a.product_name.localeCompare(b.product_name)
           )
-        : [...snackData].sort((a, b) =>
+        : [...sortedSnacks].sort((a, b) =>
             b.product_name.localeCompare(a.product_name)
           )
     );
@@ -73,19 +91,28 @@ export const SnackContextProvider = ({ children }) => {
 
   const sortSnacksByIngredients = () => {
     setDesending((desending) => !desending);
-    setSnackData((snackData) =>
+    setSortedSnacks(
       desending
-        ? [...snackData].sort((a, b) =>
+        ? [...sortedSnacks].sort((a, b) =>
             a.ingredients.join(", ").localeCompare(b.ingredients.join(", "))
           )
-        : [...snackData].sort((a, b) =>
+        : [...sortedSnacks].sort((a, b) =>
             b.ingredients.join(", ").localeCompare(a.ingredients.join(", "))
           )
     );
   };
+
   return (
     <SnackContext.Provider
       value={{
+        paginationNexPage,
+        paginationPreviousPage,
+        startIndex,
+        endIndex,
+        setSortedSnacks,
+        paginationSlice,
+        setSnackData,
+
         snackData,
         search,
         setSearch,
