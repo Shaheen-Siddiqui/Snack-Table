@@ -9,21 +9,21 @@ export const SnackContextProvider = ({ children }) => {
   const [desending, setDesending] = useState(false);
 
   const [startIndex, setStartIndex] = useState(0);
-  const [endIndex, setEndIndex] = useState(3);
+  const [endIndex, setEndIndex] = useState(7);
 
   const paginationSlice =
     startIndex >= 0 ? snackData.slice(startIndex, endIndex) : snackData;
   const [sortedSnacks, setSortedSnacks] = useState(paginationSlice);
 
   const paginationNexPage = () => {
-    setStartIndex((startIndex) => startIndex + 3);
-    setEndIndex((endIndex) => endIndex + 3);
+    setStartIndex((startIndex) => startIndex + 7);
+    setEndIndex((endIndex) => endIndex + 7);
     setDesending(false);
   };
 
   const paginationPreviousPage = () => {
-    setStartIndex((startIndex) => startIndex - 3);
-    setEndIndex((endIndex) => endIndex - 3);
+    setStartIndex((startIndex) => startIndex - 7);
+    setEndIndex((endIndex) => endIndex - 7);
   };
 
   const filterSearch =
